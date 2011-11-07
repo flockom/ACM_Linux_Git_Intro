@@ -1,0 +1,130 @@
+/*********************************************************************************/
+/*********************************************************************************/
+//Copyright (C) 2011 Illinois Institute of Technology ACM Chapter
+
+//Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+
+//The above copyright notice and this permission notice shall be included in
+//all copies or substantial portions of the Software.
+
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//THE SOFTWARE.
+/*********************************************************************************/
+/*********************************************************************************/
+
+/***********/
+#define BIN #! /bin/bash
+BIN
+/***********/
+
+/***********/
+#if TWO || THREE || FOUR || FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+ALL=
+#endif
+
+#if THREE || FOUR || FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+ARGS=
+#endif
+
+#if FOUR || FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+DBL_ARGS=
+LOCK=0
+#endif
+
+#if FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+RMV=
+#endif
+
+for ARG in $@
+do
+    #if ONE
+    echo $ARG 
+    #endif
+    
+    #if FOUR || FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+    if [[ $LOCK == 1 ]]; then
+	LOCK=0
+	DBL_ARGS=$DBL_ARGS" "$ARG
+    else
+	if [[ $ARG == --* ]]; then
+	    LOCK=1
+	    DBL_ARGS=$DBL_ARGS" "$ARG
+	elif [[ $ARG == -* ]]; then
+	    ARGS=$ARGS" "$ARG
+	#if FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+	else
+	    RMV=$RMV" "$ARG
+	#endif
+	fi
+    fi
+    #endif
+    
+    #if THREE
+    if [[ $ARG == -* ]]; then
+	ARGS=$ARGS" "$ARG
+    fi
+    #endif
+    
+    #if TWO || THREE || FOUR || FIVE || SIX || SEVEN || EIGHT || NINE || TEN
+    ALL=$ALL" "$ARG
+    #endif
+done
+
+#if SIX
+//use 'export TRASH="/home/..."' before
+echo $TRASH
+#endif
+
+#if SEVEN || EIGHT || NINE || TEN
+for RM in $RMV
+do
+    #if NINE || TEN
+    DATE=`date --rfc-3339 s | sed 's: :.:'`
+    #endif
+    
+    #if NINE
+    COPY=$RM"."$DATE
+    #elif TEN
+    FIRST=`echo $RM | cut -d"/" -f1-1`
+    SECOND=`echo $RM | sed' s,^[^/]*/,,'`
+    COPY=$FIRST"."$DATE"/"$SECOND
+    #else
+    COPY=$RM
+    #endif
+    
+    mkdir -p $(dirname $TRASH/$COPY)
+    cp -rf $RM $TRASH/$COPY
+done
+#endif
+
+#if EIGHT
+rm $ARGS $DBL_ARGS $RMV
+#endif
+
+#if TWO || THREE || FOUR || FIVE
+echo "ALL : " $ALL
+#endif
+
+#if THREE || FOUR || FIVE
+echo "ARGS : " $ARGS
+#endif
+
+#if FOUR || FIVE
+echo "DBL_ARGS : " $DBL_ARGS
+#endif
+
+#if FIVE
+echo "RMV : " $RMV
+#endif
+/***********/
+
