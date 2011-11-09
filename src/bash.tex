@@ -32,13 +32,13 @@ Let's start with a scripts!!.
 We are going to write a simple trashcan script which you may use instead of the rm command because what goes with rm is gone except if you are up to recover deleted inodes on your hard drive using foremost!
 
 \subsection{ONE}
-Write a simple script which print all its parameters.
+Write a simple script which print all its parameters using ``for do done'' and ``echo''.
 
 \subsection{TWO}
 Concat all those parameters in one variable called ALL and print it.
 
 \subsection{THREE}
-Save all options given into a second variable called ARGS and print it.
+Save all options given into a second variable called ARGS and print it, use the ``if [[ ]]; then fi'' statement.
 
 \subsection{FOUR}
 Add a variable DBL_ARGS  to save complex arguments.
@@ -50,16 +50,16 @@ Make sure that you can save all parameters given to the command.
 
 \subsection{SIX}
 Add a TRASH variable to handle the destination of the deleted files, your trashcan.
-Use the export feature if you can.
+Use the ``export'' feature if you can.
 
 \subsection{SEVEN}
-Copy all the RMV nodes to the trash, keeping the tree context.
+Copy all the RMV nodes to the trash, keeping the tree context using ``cp'';
 
 \subsection{EIGHT}
-Remove all the old files.
+Remove all the old files using ``rm''.
 
 \subsection{NINE}
-Append the time (date + time) the directories/files while copying them to the trash.
+Append the time (date + time) the directories/files while copying them to the trash using ``date'' and ``sed'' to remove any space in the string.
 
 \subsection{TEN}
 Test your script and make corrections if needed.
