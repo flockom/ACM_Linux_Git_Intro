@@ -293,7 +293,33 @@ $ man 1p exit
   
 \section{Git}
 
-  
+Git is a decentralized Version Control System wrote mainly by Linus Torvalds for the development of Linux.
+It is a CVS like tool, and unlike Subversion has a strong branching system.
+The only draw back is the fact that it uses an automerge tool which is efficient but can bypass real semantic conflicts and defects.
+Indeed, it can only work on the syntax but in CVS, you have to merge all the files by hand which one can find more reliable when it comes to avoiding bugs.
+
+Actually, CVS is old and Git is the ``best'' alternative, especially facing Subversion (does not have a real branching stuff is has a main server).
+
+Well, lets have a deeper view in Git.
+By the way, you can access man pages of git commands using ``man git branch'' for instance.
+
+First, you have to set up a new environment using ``git init'', it will initiate a new local repository.
+
+At any time, you can use ``gitg'' to have a graphical representation of your repository.
+
+Git is using a concept called the stagging area. It is a space between unstagged and committed.
+It allows to have a good interaction with your files, meaning that you cannot directly commit them.
+
+The first step is to ``add'' a file which is going to add it to the stagged area.
+To remove a file from the stagging area, you can use the command ``reset''.
+Then use commit to put them in the local repo.
+
+Two useful commands are :
+\begin{itemize}
+\item{``log'' which shows the log entered while committing}
+\item{``blame'', one can use to see who has changed a part of a file, typically to check who has introduced a bug!!}
+\end{itemize}
+
 \section{Bash Scripts}
 \input{bash}
 
