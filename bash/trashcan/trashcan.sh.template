@@ -57,7 +57,9 @@ do
 	DBL_ARGS=$DBL_ARGS" "$ARG
     else
 	if [[ $ARG == --* ]]; then
+	    if [[ $ARG == "--interactive" ]]; then
 	    LOCK=1
+	    fi
 	    DBL_ARGS=$DBL_ARGS" "$ARG
 	elif [[ $ARG == -* ]]; then
 	    ARGS=$ARGS" "$ARG
