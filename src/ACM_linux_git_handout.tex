@@ -2,6 +2,7 @@
 \usepackage[letterpaper]{geometry}
 \usepackage{verbatim}
 \usepackage{listings}
+\usepackage{url}
 \newenvironment{code}{\footnotesize\verbatim}{\endverbatim\normalsize}
 
 \title{IIT ACM Linux/Git Beginners Tutorial}
@@ -16,7 +17,7 @@ This tutorial will cover basic use of the bash shell and the git version control
 
   \subsection{Why Use the Shell?}
 
-  \begin{lstlisting}
+  \begin{verbatim}
  _______________________ 
 <  It's A UNIX system!  >
  ----------------------- 
@@ -25,17 +26,76 @@ This tutorial will cover basic use of the bash shell and the git version control
             (__)\       )\/\
                 ||----w |
                 ||     ||
-  \end{lstlisting}
+  \end{verbatim}
 
 
   \subsection{Why use Version Control?}
 
 \section{Some Prerequisite Material}
-  \subsection{File System Layout}
+
+  \subsection{Linux/UNIX/GNU/OSX/BSD/Solaris.... ?}
+  $http://en.wikipedia.org/wiki/Unix$
+  \subsection{File System Layout}  
+  The file system may be different than what you are used to (Micro\$oft). All files are organized into a single tree. Everything in Linux is a file (or a process). Directories are special files, your hard drive is a file, your speaker is a file, your screen is a file...etc. Disk partitions are \textit{mounted} into the tree however you find convenient as opposed to seeing them separately (C drive, D drive). The root of the tree is noted as `$/$'. The top level directories are those located at the root of the tree. They are fairly consistent across different *NIX operating systems and the different Linux distros. Here are some of the more common ones as described by the Filesystem Hierarchy Standard Group~\cite{fhs}
+
+  \begin{tabular}{l|l}
+    bin   & Essential command binaries         \\ \hline
+    boot  & Static files of the boot loader    \\ \hline
+    dev   & Device files                       \\ \hline
+    etc   & Host-specific system configuration \\\hline
+    home  & User home directories              \\\hline
+    lib   & Essential shared libraries and kernel modules  \\\hline
+    media & Mount point for removable media (flash drives/cdrom) \\\hline
+    mnt   & Mount point for mounting a filesystem temporarily \\\hline
+    opt   & Add-on application software packages   \\\hline
+    proc  & Kernel and process information virtual filesystem  \\\hline
+    sbin  & Essential system binaries \\\hline
+    srv   & Data for services provided by this system  \\\hline
+    tmp   & temporary files \\\hline
+    usr   & Secondary hierarchy \\\hline
+    var   & Variable data (/var/log contains log files)
+  \end{tabular}
+
   \subsection{Users Groups and Permissions}
+  Linux is a multi-user system. Every user has a username and a password. Additionally users can belong
+  to groups. Every group can have multiple users and every user can belong to multiple groups. Users and 
+  groups are the basic mechanism for managing access rights on a Linux system. 
+  The file \texttt{/etc/passwd} contains a list of all users and maps usernames to IDs(uid)(among some other things). 
+  The file \texttt{/etc/group} contains a list of all groups, maps from group names to gids and the users which have membership in them.
+
+  Every file has associated with it an owner, a group and permissions. 
+  The owner of a file is a user on the system. 
+  Permissions consist of a list of access rights for the file which specify who
+  can read/write/execute the file. These rights are specified for each file in relation to three categories of users: the owner, members of the file's group and everyone else. For example:
+  
+\begin{verbatim}
+$ ls -l
+total 152
+-rw-rw---x 1 foo bars   1543 Nov  8 18:24 forkbomb
+-rw-r--r-- 1 foo bars    206 Nov  8 18:09 ACM_linux_git_handout.tex
+\end{verbatim}
+
+  The file \texttt{forkbomb} can be read and written to by the user \texttt{foo} and members of the group \texttt{bars}. Everyone else is only allowed to execute the file. On the other hand the file \texttt{ACM\_linux\_git\_handout.tex} can be read and written by \texttt{foo} and only read by everyone else.
+  
   
 \section{The Shell}
+Lets open up a shell and work with some basic commands.
   \subsection{Directory Navigation and File Manipulation}
+  The most fundamental thing you need to be able to do is navigate the filesystem.
+  First we should figure out where we are. 
+  The command $pwd$ (print working directory) accomplishes this task.
+
+\begin{verbatim}
+$ pwd
+/home/foo
+\end{verbatim}
+
+  We see that we are in home directory of the user \texttt{foo}. 
+  
+  
+  
+  
+  
   \subsection{arguments and IO redirection}
   \subsection{Man Pages (RTFM)}
   \subsection{Editors}
@@ -50,5 +110,7 @@ This tutorial will cover basic use of the bash shell and the git version control
 \input{bash}
 
 
+\bibliographystyle{abbrv}
+\bibliography{ACM_linux_git_handout}
 
 \end{document}
