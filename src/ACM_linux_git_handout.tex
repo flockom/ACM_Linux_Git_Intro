@@ -208,13 +208,62 @@ $ export PS1="what should I do now? "
 \end{verbatim}  
   
 
-  \subsection{Arguments and IO redirection} 
+  \subsection{Options, Parameters and IO redirection} 
   Where do the commands that we have been using come from? In fact, they are just normal programs
   most of the are written in C and they are not part of bash\footnote{There are some built-in commands in bash; cd is one example. See the SHELL BUILTIN COMMANDS section of the bash manpage }.
+
+  when you enter a command, say \texttt{yes}, bash will first check if it is a built-in command
+  and if not begin searching the PATH environment variable for the program and execute the first one it finds. You can use the \texttt{which} command to see which program is actually being executed by a command.
+
+\begin{verbatim}
+$ which yes
+/usr/bin/yes
+\end{verbatim}    
+
+  This means we can also execute yes by typing the whole pathname.
   
+\begin{verbatim}
+$ /usr/bin/yes "press Ctrl+C"
+\end{verbatim}
+
+  Anyways, options/flags/switches are used to change how a program runs. Parameters are the normal input to the program. Sometimes options are used as named parameters so that the order of parameters is irrelevant. Options may take an argument and options' arguments may be required or optional. Below is a partial synopsys of options, refer to the \texttt{getopt} manpage for full comprehension.
+
+  \begin{itemize}
+    \item 
+      short options are a single character. they are specified using a `$-$'
+      \begin{itemize}
+        \item
+          if the option has a required argument it can written immediately after the option character
+          or with a whitespace in-between.
+        \item
+          if the option has an optional argument it must be written 
+          immediately after the option character
+        \item
+          multiple short options, used without arguments may be specified together after the `$-$'
+      \end{itemize}
+    \item
+      long options are a string. they are specified using `$--$'
+      \begin{itemize}
+        \item
+          if the option has a required argument it can written after the option separated by 
+          whitepsace or by a `='.
+        \item
+          if the option has an optional argument it must be written after the option string
+          seperated by a `='
+      \end{itemize}
+    \item
+      
+  \end{itemize}
+
   
-  
+After you have specified your options you list your parameters separated by whitespace. Typically order matters with parameters but not options.
+
+   
   \subsection{Man Pages (RTFM)}
+  Every program \textit{should} come with a manual. These are in the form of a man page. Man pages have a fairly standard layout but can be difficult to read. However, if you're persistent you will find they tend to be more useful than the random blog post you found on the net. You can look at a manpage using the \texttt{man} command
+
+
+  
   \subsection{Editors}
 
 \section{Git}
