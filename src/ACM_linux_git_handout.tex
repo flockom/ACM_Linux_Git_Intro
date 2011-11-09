@@ -15,8 +15,8 @@
 \section{Introduction}
 This tutorial will cover basic use of the bash shell and the git version control system.
 
-  \subsection{Why Use the Shell?}
-
+  \subsection{Why Use the Shell?}  
+  
   \begin{verbatim}
  _______________________ 
 <  It's A UNIX system!  >
@@ -33,9 +33,6 @@ This tutorial will cover basic use of the bash shell and the git version control
 
 \section{Some Prerequisite Material}
 
-  \subsection{Linux/UNIX/GNU/OSX/BSD/Solaris.... ?}
-  $http://en.wikipedia.org/wiki/Unix$
-  gnu coreutils reference
   \subsection{File System Layout}  
   The file system may be different than what you are used to (Micro\$oft). All files are organized into a single tree. Everything in Linux is a file (or a process). Directories are special files, your hard drive is a file, your speaker is a file, your screen is a file...etc. Disk partitions are \textit{mounted} into the tree however you find convenient as opposed to seeing them separately (C drive, D drive). The root of the tree is noted as `$/$'. The top level directories are those located at the root of the tree. They are fairly consistent across different *NIX operating systems and the different Linux distros. Here are some of the more common ones as described by the Filesystem Hierarchy Standard Group~\cite{fhs}
 
@@ -155,7 +152,7 @@ $ mkdir unconventional_metasyntactic_variable_names
 $ cd unconventional_metasyntactic_variable_names
 \end{verbatim}
   
-  I hope you didn't write that all out. After typing \texttt{cd u} if you hit the <Tab> key bash
+  I hope you didn't write that all out. After typing \texttt{cd u} if you hit the $<$Tab$>$ key bash
   will complete the name for you since it is the only file in the pwd which begins with a u.
 
   Here are some additional things you should know:
@@ -208,7 +205,7 @@ $ export PS1="what should I do now? "
 \end{verbatim}  
   
 
-  \subsection{Options, Parameters and IO redirection} 
+  \subsection{Options and Parameters} 
   Where do the commands that we have been using come from? In fact, they are just normal programs
   most of the are written in C and they are not part of bash\footnote{There are some built-in commands in bash; cd is one example. See the SHELL BUILTIN COMMANDS section of the bash manpage }.
 
@@ -261,6 +258,40 @@ $ /usr/bin/yes "press Ctrl+C"
   
   After you have specified your options you list your parameters separated by whitespace. Typically order matters with parameters but not options.
 
+  \subsection{Pipes and IO redirection}
+  Typically when you run a command its input is from your keyboard and its output is to your terminal.
+  These are just files called standard input/output. It is possible to change the file that a program
+  uses for stdin or stdout.
+
+  To change the file used for stdout for a command you add `$>$ filename' to the end of the command.
+  Suppose we want a file with 128 random bytes.
+  
+\begin{verbatim}
+$ head -c 128 /dev/urandom > random128
+\end{verbatim}
+
+  Other forms of output redirection
+  \begin{itemize}
+    \item \texttt{prog $>>$ out}  
+      - appends the output of prog to the file out
+    \item \texttt{prog 2$>$ out}  
+      - redirect standard error (stderr) from prog to the file out
+  \end{itemize}
+
+  To change the file used for stdin for a command you add `$<$ filename' to the end of the command.
+  Note that the commands we have been using do not require any input from stdin. Most command line utilities do not require interactive user input. However you have probably written many programs yourself which do. By changing stdin from the keyboard to a file you can automate the running of some interactive program. For example.
+
+\begin{verbatim}
+$ head -c 128 < /dev/urandom > random128
+\end{verbatim}
+
+  Pipes are used to make a ...err pipe from one command to another i.e. link the stdout of one command
+  to the stdin of another.
+
+\begin{verbatim}
+$ cat ~/.bash_history | grep "^ls" | sort
+\end{verbatim}  
+
    
   \subsection{Man Pages (RTFM)}
   Every program \textit{should} come with a manual. These are in the form of a man page. Man pages have a fairly standard layout but can be difficult to read. However, if you're persistent you will find they tend to be more useful than the random blog post you found on the net. You can look at a manpage using the \texttt{man} command
@@ -285,13 +316,10 @@ $ man 1p exit
 
   The p stands for POSIX by the way.
 
-
-
   
   \subsection{Editors}
   This tutorial is not about editors but they must be mentioned. Most of your time will invariably be spent in a editor not cding around on the shell. There are only two choices \textit{emacs} and \textit{vim}. There is an unlimited amount of argument about which is better but the important thing is that you pick one and try to master it.
   
-\section{Git}
 
   
 \section{Bash Scripts}
