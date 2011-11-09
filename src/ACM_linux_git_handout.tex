@@ -6,7 +6,7 @@
 \newenvironment{code}{\footnotesize\verbatim}{\endverbatim\normalsize}
 
 \title{IIT ACM Linux/Git Beginners Tutorial}
-%\author{Frank Lockom, Gregoire Scano}
+\author{Frank Lockom, Gregoire Scano}
 
 \begin{document}
 
@@ -35,6 +35,7 @@ This tutorial will cover basic use of the bash shell and the git version control
 
   \subsection{Linux/UNIX/GNU/OSX/BSD/Solaris.... ?}
   $http://en.wikipedia.org/wiki/Unix$
+  gnu coreutils reference
   \subsection{File System Layout}  
   The file system may be different than what you are used to (Micro\$oft). All files are organized into a single tree. Everything in Linux is a file (or a process). Directories are special files, your hard drive is a file, your speaker is a file, your screen is a file...etc. Disk partitions are \textit{mounted} into the tree however you find convenient as opposed to seeing them separately (C drive, D drive). The root of the tree is noted as `$/$'. The top level directories are those located at the root of the tree. They are fairly consistent across different *NIX operating systems and the different Linux distros. Here are some of the more common ones as described by the Filesystem Hierarchy Standard Group~\cite{fhs}
 
@@ -83,28 +84,215 @@ Lets open up a shell and work with some basic commands.
   \subsection{Directory Navigation and File Manipulation}
   The most fundamental thing you need to be able to do is navigate the filesystem.
   First we should figure out where we are. 
-  The command $pwd$ (print working directory) accomplishes this task.
+  The command \texttt{pwd} (print/present working directory) accomplishes this task.
 
 \begin{verbatim}
 $ pwd
 /home/foo
 \end{verbatim}
 
-  We see that we are in home directory of the user \texttt{foo}. 
-  
-  
-  
-  
-  
-  \subsection{arguments and IO redirection}
-  \subsection{Man Pages (RTFM)}
-  \subsection{Editors}
+  We see that we are in home directory of the user \texttt{foo}. The organization
+  of users home directories in this way is just a convention, there's no magic (no `registry' either). 
+  This is implemented using the \texttt{/etc/passwd} file on Linux. 
 
+  For examples sake we need a file to work with. Lets create a file called foo.txt. We can use the following command to write into a file from standard input (your keyboard). Type the contents you would like to see in your file then hit the control key and D at the same time. $<$Ctrl$>$+D inserts a EOF (end of file) character into the terminal.
+
+\begin{verbatim}
+$ cat > foo.txt 
+Just fooing around
+\end{verbatim}
+
+  Possibly the most used command is \texttt{ls}, which lists the contents of the working directory.
+  
+\begin{verbatim}
+$ ls
+foo.txt
+\end{verbatim}
+  
+  Now we know that the directory \texttt{/home/foo} contains one file.
+  If we want to copy a file we use the command \texttt{cp}
+
+\begin{verbatim}
+$ cp foo.txt bar.txt
+\end{verbatim}
+
+  Now there is a file called bar.txt which is a copy of foo.txt. One way to view a file
+  is to use the \texttt{cat} command. cat takes file names, concatonates their contents and prints
+  the result to standard output(your terminal).
+
+\begin{verbatim}
+$ cat foo.txt 
+just fooing around
+\end{verbatim}
+  
+  This is not always the best way to view a file, if it is really long you should use \texttt{less}.
+  less will let you scroll through a file and only reads the file as you need it, so it can be faster than starting up a text editor.
+  
+  Instead of copying a file you might want to `cut' it. All you are really doing is \textit{moving} the file from one place to another, hence the command \texttt{mv}.
+\begin{verbatim}
+$ mv foo.txt baa.txt
+\end{verbatim}
+
+  Now the file foo.txt is called baa.txt. However, baa is rather unconventional\footnote{the correct name is baz} so we should delete it.
+  Files can be removed using the \texttt{rm} command.
+
+\begin{verbatim}
+$ rm baa.txt
+\end{verbatim}
+  
+  Careful! there is no magic trashcan(yet) once you rm a file it is gone for good.
+
+  We pretty much have all the basics here but we have omitted one important detail, i.e. directories.
+  Lets make a directory, this is done with the command \texttt{mkdir}
+
+\begin{verbatim}
+$ mkdir unconventional_metasyntactic_variable_names
+\end{verbatim}
+  
+  Lets change into our new directory. Changing directories is done using \texttt{cd}.
+
+\begin{verbatim}
+$ cd unconventional_metasyntactic_variable_names
+\end{verbatim}
+  
+  I hope you didn't write that all out. After typing \texttt{cd u} if you hit the <Tab> key bash
+  will complete the name for you since it is the only file in the pwd which begins with a u.
+
+  Here are some additional things you should know:
+  \begin{itemize}
+    \item 
+      The file \texttt{\~} refers to your home directory. (its the same as writing \texttt{/home/foo})
+    \item 
+      The file \texttt{.} refers to your pwd
+    \item
+      The file \texttt{..} refers to the parent of your pwd
+    \item
+      Any time you give a filename to a command you can give a relative or absolute/full path.
+      An absolute path always starts from root (so it begins with \texttt{/}).
+      A relative path is from the pwd
+  \end{itemize}
+  
+  \subsection{Environment Variables}
+  Environment Variables are available to every process through the system call \textit{environ}, they are inherited from the parent process through the \textit{exec} system call. You don't really need to know what this means\footnote{Not yet anyways, wait until you take CS351}. What you need to understand is that bash creates some environment variables and they are available to the programs that you run in bash. 
+
+  You can view your environment variables using the command \texttt{env}. Some notable ones are listed below.
+
+  \begin{itemize}
+    \item
+      USER - the user currently logged in
+    \item
+      HOME - the come directory of USER
+    \item
+      PATH - a list of directories used to search for incomplete filenames(typically programs)
+    \item
+      PWD  -  your present working directory
+    \item
+      SHELL - USER's login shell(specified in /etc/passwd)
+    \item
+      EDITOR - USER's preferred utility to edit files (should always be set to emacs)
+    \item
+      PS1   -  can be used to customize your command prompt
+  \end{itemize}
+
+  In bash you can use an environment variable by prefixing its name with a `\$'.
+
+\begin{verbatim}
+$ echo $USER
+foo
+\end{verbatim}
+
+  You can set an environment variable using the bash built-in command \texttt{export}. 
+
+\begin{verbatim}
+$ export PS1="what should I do now? "
+\end{verbatim}  
+  
+
+  \subsection{Options, Parameters and IO redirection} 
+  Where do the commands that we have been using come from? In fact, they are just normal programs
+  most of the are written in C and they are not part of bash\footnote{There are some built-in commands in bash; cd is one example. See the SHELL BUILTIN COMMANDS section of the bash manpage }.
+
+  when you enter a command, say \texttt{yes}, bash will first check if it is a built-in command
+  and if not begin searching the PATH environment variable for the program and execute the first one it finds. You can use the \texttt{which} command to see which program is actually being executed by a command.
+
+\begin{verbatim}
+$ which yes
+/usr/bin/yes
+\end{verbatim}    
+
+  This means we can also execute yes by typing the whole pathname.
+  
+\begin{verbatim}
+$ /usr/bin/yes "press Ctrl+C"
+\end{verbatim}
+
+  Anyways, options/flags/switches are used to change how a program runs. Parameters are the normal input to the program. Sometimes options are used as named parameters so that the order of parameters is irrelevant. Options may take an argument and options' arguments may be required or optional. Below is a partial synopsys of options, refer to the \texttt{getopt} manpage for full comprehension.
+
+
+
+  \begin{itemize}
+  \item 
+    short options are a single character. they are specified using a `$-$'
+    \begin{itemize}
+    \item
+      if the option has a required argument it can written immediately after the option character
+      or with a whitespace in-between.
+    \item
+      if the option has an optional argument it must be written 
+      immediately after the option character
+    \item
+      multiple short options, used without arguments may be specified together after the `$-$'
+    \end{itemize}
+  \item
+    long options are a string. they are specified using `$--$'
+    \begin{itemize}
+    \item
+      if the option has a required argument it can written after the option separated by 
+      whitepsace or by a `='.
+    \item
+      if the option has an optional argument it must be written after the option string
+      seperated by a `='
+    \end{itemize}  
+    
+  \end{itemize}
+
+
+
+  
+  After you have specified your options you list your parameters separated by whitespace. Typically order matters with parameters but not options.
+
+   
+  \subsection{Man Pages (RTFM)}
+  Every program \textit{should} come with a manual. These are in the form of a man page. Man pages have a fairly standard layout but can be difficult to read. However, if you're persistent you will find they tend to be more useful than the random blog post you found on the net. You can look at a manpage using the \texttt{man} command
+
+\begin{verbatim}
+$ man ls
+\end{verbatim}
+
+  Refer to the manpage for \texttt{man} for information about the general format for manpages
+
+  There are multiple \textit{sections} to the manual pages. You will most commonly use sections 1(programs and shell commands), 2(system calls) and 3(library functions). Some names exist in multiple
+  man page sections. So you must explicitly specify a section, you can do this by giving the section number before the name. If you want to search all the sections for an entry use the \texttt{whatis} command.
+
+\begin{verbatim}
+$ whatis exit
+exit (3p)            - terminate a process
+exit (3)             - cause normal process termination
+exit (2)             - terminate the calling process
+exit (1p)            - cause the shell to exit
+$ man 1p exit
+\end{verbatim}
+
+  The p stands for POSIX by the way.
+
+
+
+  
+  \subsection{Editors}
+  This tutorial is not about editors but they must be mentioned. Most of your time will invariably be spent in a editor not cding around on the shell. There are only two choices \textit{emacs} and \textit{vim}. There is an unlimited amount of argument about which is better but the important thing is that you pick one and try to master it.
+  
 \section{Git}
 
-  \subsection{Distributed Version Control}
-  \subsection{How Git Stores Data}
-  \subsection{Getting Started}
   
 \section{Bash Scripts}
 \input{bash}
