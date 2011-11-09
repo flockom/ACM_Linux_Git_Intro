@@ -228,44 +228,69 @@ $ /usr/bin/yes "press Ctrl+C"
 
   Anyways, options/flags/switches are used to change how a program runs. Parameters are the normal input to the program. Sometimes options are used as named parameters so that the order of parameters is irrelevant. Options may take an argument and options' arguments may be required or optional. Below is a partial synopsys of options, refer to the \texttt{getopt} manpage for full comprehension.
 
+
+
   \begin{itemize}
-    \item 
-      short options are a single character. they are specified using a `$-$'
-      \begin{itemize}
-        \item
-          if the option has a required argument it can written immediately after the option character
-          or with a whitespace in-between.
-        \item
-          if the option has an optional argument it must be written 
-          immediately after the option character
-        \item
-          multiple short options, used without arguments may be specified together after the `$-$'
-      \end{itemize}
+  \item 
+    short options are a single character. they are specified using a `$-$'
+    \begin{itemize}
     \item
-      long options are a string. they are specified using `$--$'
-      \begin{itemize}
-        \item
-          if the option has a required argument it can written after the option separated by 
-          whitepsace or by a `='.
-        \item
-          if the option has an optional argument it must be written after the option string
-          seperated by a `='
-      \end{itemize}
+      if the option has a required argument it can written immediately after the option character
+      or with a whitespace in-between.
     \item
-      
+      if the option has an optional argument it must be written 
+      immediately after the option character
+    \item
+      multiple short options, used without arguments may be specified together after the `$-$'
+    \end{itemize}
+  \item
+    long options are a string. they are specified using `$--$'
+    \begin{itemize}
+    \item
+      if the option has a required argument it can written after the option separated by 
+      whitepsace or by a `='.
+    \item
+      if the option has an optional argument it must be written after the option string
+      seperated by a `='
+    \end{itemize}  
+    
   \end{itemize}
 
+
+
   
-After you have specified your options you list your parameters separated by whitespace. Typically order matters with parameters but not options.
+  After you have specified your options you list your parameters separated by whitespace. Typically order matters with parameters but not options.
 
    
   \subsection{Man Pages (RTFM)}
   Every program \textit{should} come with a manual. These are in the form of a man page. Man pages have a fairly standard layout but can be difficult to read. However, if you're persistent you will find they tend to be more useful than the random blog post you found on the net. You can look at a manpage using the \texttt{man} command
 
+\begin{verbatim}
+$ man ls
+\end{verbatim}
+
+  Refer to the manpage for \texttt{man} for information about the general format for manpages
+
+  There are multiple \textit{sections} to the manual pages. You will most commonly use sections 1(programs and shell commands), 2(system calls) and 3(library functions). Some names exist in multiple
+  man page sections. So you must explicitly specify a section, you can do this by giving the section number before the name. If you want to search all the sections for an entry use the \texttt{whatis} command.
+
+\begin{verbatim}
+$ whatis exit
+exit (3p)            - terminate a process
+exit (3)             - cause normal process termination
+exit (2)             - terminate the calling process
+exit (1p)            - cause the shell to exit
+$ man 1p exit
+\end{verbatim}
+
+  The p stands for POSIX by the way.
+
+
 
   
   \subsection{Editors}
-
+  This tutorial is not about editors but they must be mentioned. Most of your time will invariably be spent in a editor not cding around on the shell. There are only two choices \textit{emacs} and \textit{vim}. There is an unlimited amount of argument about which is better (emacs) but the important thing is that you pick one and master it.
+  
 \section{Git}
 
   \subsection{Distributed Version Control}
