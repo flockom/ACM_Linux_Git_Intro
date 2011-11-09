@@ -1,1 +1,72 @@
-This is the bash script part
+%\section{!!}
+
+A shell is used to enter commands with a high level perspective. The user does not known anything about the operating system and the kernel interface.
+One could say that it is the barebone of the user interface because it does not need any sophisticated screen management and run directly in a terminal.
+
+On Linux systems, you can switch to terminals using Ctrl-Alt and F1 to F8 keys.
+The terminal TTY7 is often used to run the X server while the TTY8 shows log of the system.
+
+A shell is made of an Read-Eval-Print loop and commands are build on a top of it.
+Typically, commands are C programs for the sake of efficiency and portability which are written so as to comply with as many operating system as possible.
+Thus their code is not easy to read and they could be long to test and correct as the developper has to switch platform.
+
+GNU defined the Coreutils package which provide a high level representation of the operating system as well as devices.
+The purpose of this package is to provide an interface, whoever uses it is almost certain that it will be portable, and this is why it is also restricted.
+No fancy commands are allowed and mandatory options are required to release the program such as the ``--version'' option.
+Indeed, this option is used by configuration scripts (Makefile, apt) to know the current environment of the user and adapt internal options to match those versions.
+
+Knowing that, shell scripts are programming languages based with the same orientation.
+
+They are not portable but it is easy to change shell from one to another if needed.
+
+There exist several shell interpreters such as :
+\begin{itemize}
+  \item{Bourne Shell : bash, sh, ksh}
+  \item{C-Shell : csh, tcsh}
+  \item{Other shells}
+\end{itemize}
+
+Each of them has its own syntax but the concepts are similar.
+
+Let's start with a scripts!!.
+We are going to write a simple trashcan script which you may use instead of the rm command because what goes with rm is gone except if you are up to recover deleted inodes on your hard drive using foremost!
+
+\subsection{ONE}
+Write a simple script which print all its parameters.
+
+\subsection{TWO}
+Concat all those parameters in one variable called ALL and print it.
+
+\subsection{THREE}
+Save all options given into a second variable called ARGS and print it.
+
+\subsection{FOUR}
+Add a variable DBL_ARGS  to save complex arguments.
+Add a feature to save the argument of the --interactive option.
+
+\subsection{FIVE}
+At this point you will add a variable RMV to store all the files/directories to delete.
+Make sure that you can save all parameters given to the command.
+
+\subsection{SIX}
+Add a TRASH variable to handle the destination of the deleted files, your trashcan.
+Use the export feature if you can.
+
+\subsection{SEVEN}
+Copy all the RMV nodes to the trash, keeping the tree context.
+
+\subsection{EIGHT}
+Remove all the old files.
+
+\subsection{NINE}
+Append the time (date + time) the directories/files while copying them to the trash.
+
+\subsection{TEN}
+Test your script and make corrections if needed.
+
+\subsection{MORE}
+Now you have something working pretty well and you have learnt the basics of shell scripting as well as gone over several basic and powerful commands.
+You can notice that it is painful to write. Well, if your script is simple you may see that scripting is easy to write and fast to debbug.
+But, if the script begin to be more complicated, you can break it in several part or write it in C.
+
+To have fun, you can now modify your script to add features.
