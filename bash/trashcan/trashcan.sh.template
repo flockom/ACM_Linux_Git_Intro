@@ -92,22 +92,24 @@ do
     DATE=`date --rfc-3339 s | sed 's: :.:'`
     #endif
     
-    #if NINE
-    COPY=$RM"."$DATE
-    #elif TEN
-    FIRST=`echo $RM | cut -d"/" -f1-1`
-    SECOND=`echo $RM | sed' s,^[^/]*/,,'`
-    COPY=$FIRST"."$DATE"/"$SECOND
+    #if NINE || TEN
+    if [[ -d $RM ]]; then
+	mkdir -p $(dirname $TRASH/$COPY)
+	FIRST=`echo $RM | cut -d"/" -f1-1`
+	SECOND=`echo $RM | sed 's,^[^/]*/,,'`
+	COPY=$FIRST"."$DATE"/"$SECOND
+    else
+	COPY=$RM"."$DATE
+    fi
     #else
     COPY=$RM
     #endif
     
-    mkdir -p $(dirname $TRASH/$COPY)
     cp -rf $RM $TRASH/$COPY
 done
 #endif
 
-#if EIGHT
+#if EIGHT || NINE || TEN
 rm $ARGS $DBL_ARGS $RMV
 #endif
 
