@@ -6,7 +6,7 @@
 \newenvironment{code}{\footnotesize\verbatim}{\endverbatim\normalsize}
 
 \title{IIT ACM Linux/Git Beginners Tutorial}
-%\author{Frank Lockom, Gregoire Scano}
+\author{Frank Lockom, Gregoire Scano}
 
 \begin{document}
 
@@ -35,6 +35,7 @@ This tutorial will cover basic use of the bash shell and the git version control
 
   \subsection{Linux/UNIX/GNU/OSX/BSD/Solaris.... ?}
   $http://en.wikipedia.org/wiki/Unix$
+  gnu coreutils reference
   \subsection{File System Layout}  
   The file system may be different than what you are used to (Micro\$oft). All files are organized into a single tree. Everything in Linux is a file (or a process). Directories are special files, your hard drive is a file, your speaker is a file, your screen is a file...etc. Disk partitions are \textit{mounted} into the tree however you find convenient as opposed to seeing them separately (C drive, D drive). The root of the tree is noted as `$/$'. The top level directories are those located at the root of the tree. They are fairly consistent across different *NIX operating systems and the different Linux distros. Here are some of the more common ones as described by the Filesystem Hierarchy Standard Group~\cite{fhs}
 
@@ -171,7 +172,48 @@ $ cd unconventional_metasyntactic_variable_names
       A relative path is from the pwd
   \end{itemize}
   
+  \subsection{Environment Variables}
+  Environment Variables are available to every process through the system call \textit{environ}, they are inherited from the parent process through the \textit{exec} system call. You don't really need to know what this means\footnote{Not yet anyways, wait until you take CS351}. What you need to understand is that bash creates some environment variables and they are available to the programs that you run in bash. 
+
+  You can view your environment variables using the command \texttt{env}. Some notable ones are listed below.
+
+  \begin{itemize}
+    \item
+      USER - the user currently logged in
+    \item
+      HOME - the come directory of USER
+    \item
+      PATH - a list of directories used to search for incomplete filenames(typically programs)
+    \item
+      PWD  -  your present working directory
+    \item
+      SHELL - USER's login shell(specified in /etc/passwd)
+    \item
+      EDITOR - USER's preferred utility to edit files (should always be set to emacs)
+    \item
+      PS1   -  can be used to customize your command prompt
+  \end{itemize}
+
+  In bash you can use an environment variable by prefixing its name with a `\$'.
+
+\begin{verbatim}
+$ echo $USER
+foo
+\end{verbatim}
+
+  You can set an environment variable using the bash built-in command \texttt{export}. 
+
+\begin{verbatim}
+$ export PS1="what should I do now? "
+\end{verbatim}  
+  
+
   \subsection{Arguments and IO redirection} 
+  Where do the commands that we have been using come from? In fact, they are just normal programs
+  most of the are written in C and they are not part of bash\footnote{There are some built-in commands in bash; cd is one example. See the SHELL BUILTIN COMMANDS section of the bash manpage }.
+  
+  
+  
   \subsection{Man Pages (RTFM)}
   \subsection{Editors}
 
